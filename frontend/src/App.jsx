@@ -12,6 +12,7 @@ import userService from "./services/userService";
 import Logout from "./components/logout";
 import Myprofile from "./components/myprofile";
 import Events from "./components/events";
+import EditEvent from "./components/editevent";
 
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
             <Route path="/logout" component={Logout} />
             <Route path="/signin" component={Signin} />
             <Route path="/events" component={Events} />
+            <Route path="/edit/:id" component={EditEvent}/>
             <Route path="/myprofile" component={Myprofile} />
             <Route path="/signup" component={Signup} />
             <Route path="/" component={Home} exact />

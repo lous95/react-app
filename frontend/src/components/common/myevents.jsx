@@ -1,4 +1,4 @@
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Event = ({
    event: { _id, eventAddress, eventDescription, eventName, eventPhone }, eventDeleteFunction
@@ -11,9 +11,9 @@ const Event = ({
         <p className="card-text">{eventDescription}</p>
         <address>{eventAddress}</address>
         <p>{eventPhone}</p>
-        {/* <Link className="btn btn-primary" to={`./edit/${_id}`}>
+        <Link className="btn btn-primary" to={`./edit/${_id}`}>
           Edit
-        </Link> */}
+        </Link>
         <button className="btn btn-danger ml-3" onClick={eventDeleteFunction}>Delete</button>
       </div>
     </div>

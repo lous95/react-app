@@ -123,7 +123,7 @@ class Myprofile extends Component {
                     </Modal>
                     <div className="row">
                         <div className="col-6">
-                            <h5><span class="badge bg-secondary">Your events</span></h5>
+                            <h5><span className="badge bg-secondary">Your events</span></h5>
                         </div>
                         <div className="col-6">
                             <button className="btn btn-danger float-right" onClick={this.handleOpenCreateNewEventModal}>Create a new event</button>
@@ -133,7 +133,7 @@ class Myprofile extends Component {
                         {events != null ? (
                         events.map((event) => <Event event={event} key={event._id} eventDeleteFunction={() => this.handleDeleteEvent(event._id)} />)
                             ): ( 
-                            <div className="col-12">
+                            <div className="col-12 mt-5">
                                 <p>No Event, create your first Event and share it with the world!</p>
                             </div>
                         )}

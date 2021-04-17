@@ -7,6 +7,7 @@ import Event from "./common/events";
 
 class Events extends Component {
     state = {
+        searchby: "eventName",
         query: '',
         events: null,
         filteredData: null,
@@ -14,27 +15,29 @@ class Events extends Component {
 
     handleInputChange = event => {
         const query = event.target.value;
-
-
+        const { searchby } = this.state;
         this.setState(prevState => {
             const filteredData = prevState.events.filter(event => {
-                return event.eventName.toLowerCase().includes(query.toLowerCase());
+                const search = event[searchby];
+                return search.toLowerCase().includes(query.toLowerCase());
             });
             return {
                 query,
                 filteredData
             }
         })
-     
     };
-
-   
+    searchbyFunc = event => {
+        this.setState({searchby: event.target.value});
+    }
 
     async componentDidMount () {
         await http.get(`${apiUrl}/events/all-events`).then(response =>{
             const { query } = this.state;
+            const { searchby } = this.state;
             const filteredData = response.data.filter(event => {
-                return event.eventName.toLowerCase().includes(query.toLowerCase());
+                const search = event[searchby];
+                return search.toLowerCase().includes(query.toLowerCase());
               });
             this.setState({events: response.data, filteredData: filteredData});
         });
@@ -50,13 +53,21 @@ class Events extends Component {
                 </div>
             </div>
             <div className="row">
-                <form>
-                    <input
-                        placeholder="Search for..."
-                        value={this.state.query}
-                        onChange={this.handleInputChange}
-                    />
-                </form>
+                <div className="col-6">
+                    <form>
+                        <input
+                            placeholder="Search for..."
+                            value={this.state.query}
+                            onChange={this.handleInputChange}
+                        />
+                    </form>
+                </div>
+                <div className="col-6">
+                    <select name="searchby" id="searchby" onChange={this.searchbyFunc} value={this.state.searchby}>
+                        <option value="eventName">event name</option>
+                        <option value="eventAddress">Location</option>
+                    </select>
+                </div>
             </div>
             <div className="row">
                 {filteredData != null ? (
