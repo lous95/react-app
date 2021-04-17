@@ -28,7 +28,9 @@ const eventSchema = new mongoose.Schema({
         maxlength:15
     },
     user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'users'},
-    likes: {type: mongoose.Schema.Types.ObjectId, ref: 'users'}
+    likes: {
+        type: Array
+    }
 });
 
 const Event = mongoose.model('Event', eventSchema);

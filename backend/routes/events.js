@@ -21,7 +21,9 @@ router.delete('/:id', auth, async (req, res) => {
     } catch (error) {
         res.status(404).send('The card with the given ID was not found.');
     }  
-  });
+});
+
+
 
 router.get("/all-events" ,async(req,res)=> {
     try {
@@ -48,12 +50,24 @@ router.put('/:id', auth, async (req, res) => {
         const { error } = validateEvent(req.body);
         if(error) throw "Event information is not valid!";
         let event = await Event.findOneAndUpdate({ _id: req.params.id }, req.body);
-        res.status(200).send("Event updated successfully");   
+        res.status(200).send("Event updated successfully");  
     } catch (error) {
         res.status(404).send("Problem ")
     }
   
-  });
+});
+
+router.post('/like-event', auth, async(req,res)=> {
+    try {
+        let event = await Event.findOne({_id: req.body.id});
+        let likes = event.likes;
+        likes.push(req.user._id);
+        event.save();
+        res.status(200).send(likes);  
+    } catch (error) {
+        res.status(404).send("error");
+    }
+});
 
 router.post('/', auth, async(req,res)=> {
     const {error} = validateEvent(req.body);

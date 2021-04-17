@@ -2,6 +2,7 @@ import React , { Component } from "react";
 import http from "../services/httpService";
 import { apiUrl } from "../config.json";
 import Event from "./common/events";
+import userService from "../services/userService";
 
 
 
@@ -11,6 +12,7 @@ class Events extends Component {
         query: '',
         events: null,
         filteredData: null,
+        id: userService.getCurrentUser()._id
     };
 
     handleInputChange = event => {
@@ -29,6 +31,21 @@ class Events extends Component {
     };
     searchbyFunc = event => {
         this.setState({searchby: event.target.value});
+    }
+
+    async likeEventFunc(id){
+        await http.post(`${apiUrl}/events/like-event`, {id}).then(response => {
+               const {filteredData} = this.state;
+               var likedEvent = filteredData.filter(event => {
+                    return event._id === id;
+               });
+               for( var x = 0; x < filteredData.length; x++){
+                    if(filteredData[x]._id === likedEvent[0]._id){
+                        filteredData[x].likes.push(this.state.id);
+                        this.setState({filteredData: filteredData});
+                    }
+               }
+        });
     }
 
     async componentDidMount () {
@@ -71,7 +88,11 @@ class Events extends Component {
             </div>
             <div className="row">
                 {filteredData != null ? (
-                   filteredData.map((event) => <Event event={event} key={event._id} />)
+                   filteredData.map((event) => <Event event={event}
+                    key={event._id}
+                    likeEventFunc={() => this.likeEventFunc(event._id)}
+                    likes={event.likes.length}
+                    disable={event.likes.includes(this.state.id)}/>)
                         ): ( 
                         <div className="col-12">
                                 <p>No upcoming Events at the moment, be the first one to create a new event and share it with the world!</p>
