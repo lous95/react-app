@@ -7,9 +7,11 @@ const router = express.Router();
 router.get("/my-events", auth, async(req,res)=> {
     try {
         const events = await Event.find({user_id: req.user._id });
-        res.send(events);
+
+
+        res.status(200).send(events);
     } catch (error) {
-        res.status(400).send({message: error.message});
+        res.status(404).send(error.message);
     }
 });
 
@@ -17,13 +19,12 @@ router.delete('/:id', auth, async (req, res) => {
     try {
         const event = await Event.findOneAndRemove({ _id: req.params.id, user_id: req.user._id });
         const events = await Event.find({user_id: req.user._id });
+        if(!events) return res.status(404).send("No events created by the given user");
         res.status(200).send(events);
     } catch (error) {
-        res.status(404).send('The card with the given ID was not found.');
+        res.status(404).send({message: 'The Event with the given ID was not found.'});
     }  
 });
-
-
 
 router.get("/all-events" ,async(req,res)=> {
     try {
@@ -38,7 +39,6 @@ router.get('/:id', auth, async (req, res) => {
     try {
         const event = await Event.findOne({ _id: req.params.id, user_id: req.user._id });
         res.status(200).send(event);
-        
     } catch (error){
         res.status(404).send('Event was not found!');
     } 
@@ -70,20 +70,24 @@ router.post('/like-event', auth, async(req,res)=> {
 });
 
 router.post('/', auth, async(req,res)=> {
-    const {error} = validateEvent(req.body);
-    if(error)
-        return res.status(400).send(error.details[0].message);
-    let event = new Event({
-        eventName: req.body.eventName,
-        eventDescription: req.body.eventDescription,
-        eventAddress: req.body.eventAddress,
-        eventPhone: req.body.eventPhone,
-        user_id: req.user._id
-    })
-
-    const eventPost = await event.save();
-    const events = await Event.find({user_id: req.user._id });
-    res.send(events);
+    try {
+        const {error} = validateEvent(req.body);
+        if(error) throw error.details[0].message;
+        let event = new Event({
+            eventName: req.body.eventName,
+            eventDescription: req.body.eventDescription,
+            eventAddress: req.body.eventAddress,
+            eventPhone: req.body.eventPhone,
+            user_id: req.user._id
+        })
+    
+        const eventPost = await event.save();
+        const events = await Event.find({user_id: req.user._id });
+        res.send(events);
+    } catch (error) {
+        res.status(400).send(error);
+        
+    }
 });
 
 module.exports = router;
