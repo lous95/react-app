@@ -21,14 +21,15 @@ mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
 app.use(cors());
 app.use(express.json());
 
+app.use('/api/users', users);
+app.use('/api/auth/',auth);
+app.use('/api/events', events);
+
 app.use(express.static(path.join(__dirname,'/frontend/build')));
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 );
 
-app.use('/api/users', users);
-app.use('/api/auth/',auth);
-app.use('/api/events', events);
 
 const port = process.env.PORT || 5000;
 
