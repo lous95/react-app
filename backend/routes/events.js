@@ -48,7 +48,7 @@ router.get('/:id', auth, async (req, res) => {
 router.put('/:id', auth, async (req, res) => {
     try {
         const { error } = validateEvent(req.body);
-        if(error) throw "Event information is not valid!";
+        if(error) return res.status.(404).send("Event information is invalid!");
         let event = await Event.findOneAndUpdate({ _id: req.params.id }, req.body);
         res.status(200).send("Event updated successfully");  
     } catch (error) {
@@ -72,7 +72,7 @@ router.post('/like-event', auth, async(req,res)=> {
 router.post('/', auth, async(req,res)=> {
     try {
         const {error} = validateEvent(req.body);
-        if(error) throw error.details[0].message;
+        if(error) return res.status(404).send(error.details[0].message);
         let event = new Event({
             eventName: req.body.eventName,
             eventDescription: req.body.eventDescription,
