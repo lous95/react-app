@@ -10,7 +10,7 @@ const path = require('path');
 const cors = require("cors");
 const __dirname = path.resolve();
 
-mongoose.connect(process.env.MONGODB_URI  || 'mongodb://localhost/react',{
+mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -25,8 +25,6 @@ app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 );
-
-app.use(express.static(path.jo))
 
 app.use('/api/users', users);
 app.use('/api/auth/',auth);
