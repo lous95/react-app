@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
+mongoose.connect('mongodb+srv://react-events:tarocidin3309#@cluster0.tp55w.mongodb.net/eventsapp?retryWrites=true&w=majority' || 'mongodb://localhost/react',{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
