@@ -10,5 +10,11 @@
   },
   "author": "",
   "license": "ISC",
-  "engines": {"node": "12.18.4", "npm":"7.5.6"}
+  "engines": {
+    "node": "12.18.4",
+    "npm": "7.5.6"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
