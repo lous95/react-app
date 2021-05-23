@@ -8,7 +8,7 @@ const Home = () => {
                 <div className="row">
                     <div className="col-12 ml-3">
                         This Application is for creating any kind of events. Share your events with everyone and check how many will attend your event. All you need to do is 
-                        create a new account and start adding Events!.
+                        create a new account and start adding Events!.  
                     </div>
                 </div>
             </div>
