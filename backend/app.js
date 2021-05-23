@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useCreateIndex:true,
     useFindAndModify:false
 }).then(()=> console.log('Connected to MongoDb...')
-).catch(err => console.error("Could not connect to MongoDB..." + err));
+).catch(err => console.error("Could not connect to MongoDB...." + err));
 
 
 
