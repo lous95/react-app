@@ -9,18 +9,28 @@ const mongoose = require('mongoose');
 const cors = require("cors");
 var path = require('path');
 var __dirname = path.resolve();
+var MongoClient = require('mongodb').MongoClient;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb+srv://react-events:tarocidin3309#@cluster0.tp55w.mongodb.net/eventsapp?retryWrites=true&w=majority' || 'mongodb://localhost/react',{
-    useNewUrlParser:true,
-    useUnifiedTopology:true,
-    useCreateIndex:true,
-    useFindAndModify:false
-}).then(()=> console.log('Connected to MongoDb...')
-).catch(err => console.error("Could not connect to MongoDB..."));
+// mongoose.connect('mongodb+srv://react-events:tarocidin3309#@cluster0.tp55w.mongodb.net/eventsapp?retryWrites=true&w=majority' || 'mongodb://localhost/react',{
+//     useNewUrlParser:true,
+//     useUnifiedTopology:true,
+//     useCreateIndex:true,
+//     useFindAndModify:false
+// }).then(()=> console.log('Connected to MongoDb...')
+// ).catch(err => console.error("Could not connect to MongoDB..."));
+
+
+var uri = "mongodb+srv://react-events:tarocidin3309#@cluster0.tp55w.mongodb.net/eventsapp?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 
 
 
