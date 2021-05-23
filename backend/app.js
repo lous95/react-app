@@ -10,6 +10,10 @@ const cors = require("cors");
 var path = require('path');
 var __dirname = path.resolve();
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
     useUnifiedTopology:true,
@@ -18,8 +22,7 @@ mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
 }).then(()=> console.log('Connected to MongoDb...')
 ).catch(err => console.error("Could not connect to MongoDB..."));
 
-app.use(cors());
-app.use(express.json());
+
 
 app.use('/api/users', users);
 app.use('/api/auth/',auth);
