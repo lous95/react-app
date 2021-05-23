@@ -26,11 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 var uri = "mongodb+srv://react-events:tarocidin3309#@cluster0.tp55w.mongodb.net/eventsapp?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
+client.connect();
 
 
 
