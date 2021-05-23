@@ -8,7 +8,7 @@ const http = require('http').Server(app);
 const mongoose = require('mongoose');
 const cors = require("cors");
 
-mongoose.connect('mongodb://localhost/react',{
+mongoose.connect(process.env.MONGODB_URI  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,
@@ -23,5 +23,9 @@ app.use('/api/users', users);
 app.use('/api/auth/',auth);
 app.use('/api/events', events);
 
-const port = 5000;
+const port = process.env.PORT || 5000;
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('../frontend/build'));
+}
 http.listen(port, () => console.log(`Listening on port ${port}...`));
