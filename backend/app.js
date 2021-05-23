@@ -25,7 +25,7 @@ app.use('/api/events', events);
 
 const port = process.env.PORT || 5000;
 
-if(process.env.NODE_ENV === 'production'){
-    app.use(express.static('../frontend/build'));
-}
+// if(process.env.NODE_ENV === 'production'){
+//     app.use(express.static('../frontend/build'));
+// }
 http.listen(port, () => console.log(`Listening on port ${port}...`));
