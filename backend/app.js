@@ -6,9 +6,7 @@ const auth = require('./routes/auth');
 const events = require('./routes/events');
 const http = require('http').Server(app);
 const mongoose = require('mongoose');
-const path = require('path');
 const cors = require("cors");
-// const __dirname = path.resolve();
 
 mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
