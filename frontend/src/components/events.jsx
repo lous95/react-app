@@ -3,6 +3,7 @@ import http from "../services/httpService";
 import { apiUrl } from "../config.json";
 import Event from "./common/events";
 import userService from "../services/userService";
+import axios from "axios";
 
 
 
@@ -49,7 +50,7 @@ class Events extends Component {
     }
 
     async componentDidMount () {
-        await http.get(`${apiUrl}/events/all-events`).then(response =>{
+        await axios.get(`${apiUrl}/events/all-events`).then(response =>{
             const { query } = this.state;
             const { searchby } = this.state;
             const filteredData = response.data.filter(event => {
@@ -64,29 +65,37 @@ class Events extends Component {
         const {events, filteredData} = this.state;
         return(
         <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    Our Up coming Events!
+            <div className="row mt-5">
+                <div className="col-9">
+                    <h2>Our Up coming <span className="badge badge-secondary">Events!</span></h2>
                 </div>
             </div>
             <div className="row">
                 <div className="col-6">
-                    <form>
-                        <input
-                            placeholder="Search for..."
-                            value={this.state.query}
-                            onChange={this.handleInputChange}
-                        />
-                    </form>
-                </div>
-                <div className="col-6">
-                    <select name="searchby" id="searchby" onChange={this.searchbyFunc} value={this.state.searchby}>
-                        <option value="eventName">event name</option>
-                        <option value="eventAddress">Location</option>
-                    </select>
+                    <div className="row">
+                        <div className="col-6">
+                            <form>
+                            <input
+                                placeholder="Search for..."
+                                value={this.state.query}
+                                onChange={this.handleInputChange}
+                                className="form-control"
+                            />
+                            </form>
+                        </div>
+                        <div className="col-1">
+                            <span className="badge badge-secondary">By</span>
+                        </div>
+                        <div className="col-5">
+                            <select name="searchby" id="searchby" className="custom-select" onChange={this.searchbyFunc} value={this.state.searchby}>
+                                <option value="eventName">event name</option>
+                                <option value="eventAddress">Location</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="row">
+            <div className="row mt-5">
                 {filteredData != null ? (
                    filteredData.map((event) => <Event event={event}
                     key={event._id}
