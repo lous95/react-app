@@ -7,8 +7,8 @@ const events = require('./routes/events');
 const http = require('http').Server(app);
 const mongoose = require('mongoose');
 const cors = require("cors");
-const path = require('path');
-const __dirname = path.resolve();
+var path = require('path');
+var __dirname = path.resolve();
 
 mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
@@ -21,7 +21,7 @@ mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static('/frontend/build'));
+app.use(express.static(path.join(__dirname,'/frontend/build')));
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 );
