@@ -8,7 +8,7 @@ const http = require('http').Server(app);
 const mongoose = require('mongoose');
 const path = require('path');
 const cors = require("cors");
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
     useNewUrlParser:true,
@@ -21,10 +21,10 @@ mongoose.connect(process.env.MONGODB_URL  || 'mongodb://localhost/react',{
 app.use(cors());
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, '/frontend/build')));
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
-);
+app.use(express.static('/frontend/build'));
+// app.get('*', (req, res) =>
+//   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+// );
 
 app.use('/api/users', users);
 app.use('/api/auth/',auth);
