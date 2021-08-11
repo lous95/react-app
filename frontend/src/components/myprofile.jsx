@@ -89,7 +89,7 @@ class Myprofile extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 col-md-12">
-                            <img src={profileImage} alt="profile image" className="profile-img mt-5"/>
+                            <img src={profileImage} alt="profile " className="profile-img mt-5"/>
                         </div>
                         <div className="col-lg-6 col-md-12 mt-5">
                             <div className="mt-5">
